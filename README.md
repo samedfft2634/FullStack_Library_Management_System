@@ -41,5 +41,22 @@ FullStack_Library_Management_System Project Skeleton
   </pre>
   </div>
 
+need in frontend packages
+@emotion/react
+@emotion/styled
+@mui/icons-material
+@mui/material
+@mui/x-data-grid
+@reduxjs/toolkit
+axios
+formik
+yup
+react
+react-dom
+react-redux
+react-scripts
+react-toastify
+redux-persist?
 
-
+https://mui.com/material-ui/react-tabs/
+https://mui.com/x/react-data-grid/

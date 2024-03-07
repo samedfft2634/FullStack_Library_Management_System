@@ -16,9 +16,9 @@ app.use(express.json())
 require('express-async-errors')
 
 // Routes:
-// app.use(require('./src/routes/lms.router'))
+app.use(require('./src/routes/lms.router'))
 
 // ErrorHandler
-// app.use(require('./src/errorHandler'))
+app.use(require('./src/errorHandler'))
 /* ====================================================== */
 app.listen(8000, () => console.log(`Server running on : http://${HOST}:${PORT}`));

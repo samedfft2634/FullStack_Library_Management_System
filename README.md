@@ -14,7 +14,6 @@ FullStack_Library_Management_System Project Skeleton
   |   |         └── lms.router.js    // Express.js routes for book CRUD operations 
   |   └── errorHandler.js
   ├── .gitignore           // Ignore deploying node_modules.
-  ├── db.js                 // db connection setup
   ├── db.sqlite3           // db file.
   ├── index.js              // Express.js server setup
   ├── package.json         // Node.js project configuration
@@ -33,7 +32,6 @@ FullStack_Library_Management_System Project Skeleton
   |   |         └── lms.router.js    // Express.js routes for book CRUD operations 
   |   └── errorHandler.js
   ├── .gitignore           // Ignore deploying node_modules.
-  ├── db.js                 // db connection setup
   ├── db.sqlite3           // db file.
   ├── index.js              // Express.js server setup
   ├── package.json         // Node.js project configuration

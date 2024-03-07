@@ -4,21 +4,26 @@
 /* ====================================================== */
 const express = require("express");
 const app = express();
-
-require('dotenv').config();
+const cors = require("cors");
+require("dotenv").config();
 const PORT = process.env?.PORT || 8000;
 const HOST = process.env?.HOST || "127.0.0.1";
 /* ====================================================== */
 // Accept json data:
-app.use(express.json())
+app.use(express.json());
 
+// Cors
+app.use(cors())
 // Catch async-errors:
-require('express-async-errors')
+require("express-async-errors");
 
 // Routes:
-app.use(require('./src/routes/lms.router'))
+app.use(require("./src/routes/lms.router"));
 
 // ErrorHandler
-app.use(require('./src/errorHandler'))
+app.use(require("./src/errorHandler"));
 /* ====================================================== */
-app.listen(8000, () => console.log(`Server running on : http://${HOST}:${PORT}`));
+app.listen(8000, () =>
+	console.log(`Server running on : http://${HOST}:${PORT}`)
+);
+

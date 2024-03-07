@@ -34,8 +34,8 @@ const Book = sequelize.define("Book", {
 });
 
 // Syncronization:
-sequelize.sync(); // CREATE TABLE
-// sequelize.sync({alter:true}); // TO BACKUP & DROP TABLE & CREATE TABLE & FROM BACKUP
+// sequelize.sync(); // CREATE TABLE
+// sequelize.sync({ alter: true }); // TO BACKUP & DROP TABLE & CREATE TABLE & FROM BACKUP
 
 // Connect to db:
 sequelize

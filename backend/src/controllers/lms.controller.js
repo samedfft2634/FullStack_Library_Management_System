@@ -46,7 +46,7 @@ module.exports = {
 	},
 
 	delete: async (req, res) => {
-		const data = await Todo.destroy({ where: { id: req.params.id } });
+		const data = await Book.destroy({ where: { id: req.params.id } });
 		if (data > 0) {
 			res.sendStatus(204);
 		} else {

@@ -32,8 +32,10 @@ module.exports = {
 
 	update: async (req, res) => {
 		const oldData = await Book.findByPk(req.params.id);
+		console.log(req.body);
 		const data = await Book.update(req.body, {
-			where: { id: req.params.id },
+			// where: { id: req.params.id },
+			where: { id: req.body.id },
 		});
 		console.log(oldData);
 		res.status(202).send({

@@ -72,12 +72,11 @@ import * as React from "react";
 import Box from "@mui/joy/Box";
 import Card from "@mui/joy/Card";
 import Typography from "@mui/joy/Typography";
-// import Link from "@mui/joy/Link";
 import CreateIcon from "@mui/icons-material/Create";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
-import { CardMedia, Stack } from "@mui/material";
+import { CardMedia, Link, Stack } from "@mui/material";
 
 export default function BookCard({ book, handleOpen, setValues }) {
 	const btnStyle = {
@@ -128,20 +127,7 @@ export default function BookCard({ book, handleOpen, setValues }) {
 						textAlign: "start",
 					}}
 				>
-					<Typography level="title-lg">
-						{/* <Link
-							href={`/books/${id}`}
-							overlay
-							underline="none"
-							sx={{
-								color: "text.primary",
-								"&.Mui-focusVisible:after": {
-									outlineOffset: "-4px",
-								},
-							}}		
-						</Link> here for link detail */}
-						{book?.title}
-					</Typography>
+					<Typography level="title-lg">{book?.title}</Typography>
 					<Typography level="body-sm">
 						Yazar: {book?.author}
 					</Typography>
@@ -163,11 +149,15 @@ export default function BookCard({ book, handleOpen, setValues }) {
 					</Box> */}
 					<CardActions sx={{ justifyContent: "center" }}>
 						<Box>
-							<Button size="small" sx={btnStyle}>
-								<CreateIcon  onClick={()=>{
-									handleOpen()
-									setValues(book)
-								}}/>
+							<Button
+								size="small"
+								sx={btnStyle}
+								onClick={() => {
+									handleOpen();
+									setValues(book);
+								}}
+							>
+								<CreateIcon />
 							</Button>
 
 							<Button size="small" sx={btnStyle}>

@@ -19,13 +19,11 @@ const style = {
 };
 
 export default function CardModal({ handleClose, open, handleSubmit,values,setValues }) {
-
-
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 		setValues({ ...values, [name]: value });
 		// to see form values on console.
-		console.log(values);
+		// console.log(values);
 	};
 
 	// years
@@ -47,7 +45,7 @@ export default function CardModal({ handleClose, open, handleSubmit,values,setVa
 				aria-describedby="modal-modal-description"
 			>
 				<Box
-					onSubmit={(e) => handleSubmit(e, values)} // handleSubmit'e form değerlerini iletmek için
+					onSubmit={handleSubmit} 
 					component="form"
 					sx={style}
 					noValidate
@@ -124,7 +122,7 @@ export default function CardModal({ handleClose, open, handleSubmit,values,setVa
 						color="success"
 						sx={{ width: "100%" }}
 					>
-						Yeni Kitap Ekle
+						{values?.id ? "Kitabı Güncelle" : "Yeni Kitap Ekle"}
 					</Button>
 				</Box>
 			</Modal>

@@ -1,9 +1,9 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import BookCard from "./BookCard/BookCard";
 import "./App.css";
 import CardModal from "./BookCard/CardModal";
+import axios from "axios";
 
 function App() {
 	const initValues = {
@@ -24,18 +24,7 @@ function App() {
 		setOpen(false);
 		setValues(initValues);
 	};
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		// if (infos.id) {
-		// 	// put istegi
-		// } else {
-		// 	// post istegi
-		// }
-		handleClose();
-	};
-
-	useEffect(() => {
-		//? GET request
+	const getBooks = () => {
 		axios("http://localhost:8000/books")
 			.then((res) => {
 				// console.log(res);
@@ -46,6 +35,51 @@ function App() {
 			.catch((err) => {
 				console.log(err);
 			});
+	};
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (values?.id) {
+			try {
+				const data = await fetch(
+					`http://localhost:8000/books/:${e.target?.id}`,
+					{
+						method: "PUT",
+						body: JSON.stringify(values),
+						headers: {
+							"Content-Type": "application/json",
+						},
+					}
+				);
+				getBooks();
+
+				console.log(data);
+			} catch (err) {
+				console.log(
+					err,
+					"Kitap güncellenirken bir hata meydana geldi!"
+				);
+			}
+		} else {
+			try {
+				const data = await fetch("http://localhost:8000/books", {
+					method: "POST",
+					body: JSON.stringify(values),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+				getBooks();
+				console.log(data);
+			} catch (err) {
+				console.log(err, "Kitap eklenirken bir hata meydana geldi!");
+			}
+		}
+		handleClose();
+	};
+
+	useEffect(() => {
+		//? GET request
+		getBooks();
 	}, []);
 
 	return (
@@ -78,7 +112,12 @@ function App() {
 			>
 				{books &&
 					books?.map((book) => (
-						<BookCard book={book} key={book.id} setValues={setValues} handleOpen={handleOpen} />
+						<BookCard
+							book={book}
+							key={book.id}
+							setValues={setValues}
+							handleOpen={handleOpen}
+						/>
 					))}
 			</Stack>
 			<CardModal

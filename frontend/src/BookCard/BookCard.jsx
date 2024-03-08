@@ -1,12 +1,12 @@
 // import * as React from "react";
 // import Card from "@mui/material/Card";
-// import CardActions from "@mui/material/CardActions";
 // import CardContent from "@mui/material/CardContent";
 // import CardMedia from "@mui/material/CardMedia";
-// import Button from "@mui/material/Button";
 // import Typography from "@mui/material/Typography";
 // import CreateIcon from "@mui/icons-material/Create";
 // import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+// import Button from "@mui/material/Button";
+// import CardActions from "@mui/material/CardActions";
 // import { Box } from "@mui/material";
 
 // const btnStyle = {
@@ -73,17 +73,24 @@ import Box from "@mui/joy/Box";
 import Card from "@mui/joy/Card";
 import Typography from "@mui/joy/Typography";
 // import Link from "@mui/joy/Link";
+import CreateIcon from "@mui/icons-material/Create";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import Button from "@mui/material/Button";
+import CardActions from "@mui/material/CardActions";
 import { CardMedia, Stack } from "@mui/material";
 
-export default function BookCard({
-	title,
-	author,
-	ISBN,
-	genre,
-	publicationYear,
-	image,
-	id,
-}) {
+export default function BookCard({ book, handleOpen, setValues }) {
+	const btnStyle = {
+		color: "green",
+
+		"&:hover": {
+			color: "red",
+			bgcolor: "transparent",
+			"& svg": {
+				color: "red",
+			},
+		},
+	};
 	return (
 		<Stack sx={{ minHeight: 350, mx: "auto" }}>
 			<Card
@@ -91,8 +98,8 @@ export default function BookCard({
 				sx={(theme) => ({
 					width: 300,
 					gridColumn: "span 2",
-                    opacity:".96",
-                    bgcolor:"lightgray",
+					opacity: ".96",
+					bgcolor: "lightgray",
 					transition: "transform 0.3s, border 0.3s",
 					"&:hover": {
 						borderColor:
@@ -107,8 +114,8 @@ export default function BookCard({
 				<CardMedia
 					component="img"
 					sx={{ width: "100%", height: 300, objectFit: "contain" }}
-					src={image}
-					alt={title}
+					src={book?.image}
+					alt={book?.title}
 					loading="lazy"
 				/>
 
@@ -133,14 +140,16 @@ export default function BookCard({
 								},
 							}}		
 						</Link> here for link detail */}
-						{title}
+						{book?.title}
 					</Typography>
-					<Typography level="body-sm">Yazar: {author}</Typography>
-					<Typography level="body-sm">ISBN: {ISBN}</Typography>
 					<Typography level="body-sm">
-						Yayınlanma Yılı: {publicationYear}
+						Yazar: {book?.author}
 					</Typography>
-					<Typography level="body-sm">Tür: {genre}</Typography>
+					<Typography level="body-sm">ISBN: {book?.ISBN}</Typography>
+					<Typography level="body-sm">
+						Yayınlanma Yılı: {book?.publicationYear}
+					</Typography>
+					<Typography level="body-sm">Tür: {book?.genre}</Typography>
 					{/* <Box sx={{ display: "flex", gap: 1.5, mt: "auto" }}>
 						<Avatar variant="soft" color="neutral">
 							Y
@@ -152,6 +161,20 @@ export default function BookCard({
 							</Typography>
 						</div>
 					</Box> */}
+					<CardActions sx={{ justifyContent: "center" }}>
+						<Box>
+							<Button size="small" sx={btnStyle}>
+								<CreateIcon  onClick={()=>{
+									handleOpen()
+									setValues(book)
+								}}/>
+							</Button>
+
+							<Button size="small" sx={btnStyle}>
+								<DeleteOutlineIcon />
+							</Button>
+						</Box>
+					</CardActions>
 				</Box>
 			</Card>
 		</Stack>

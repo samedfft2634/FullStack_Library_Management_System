@@ -18,12 +18,26 @@ const style = {
 	"& .MuiTextField-root": { my: 1, width: "100%" },
 };
 
-export default function CardModal({ handleClose, open }) {
-	const [year, setYear] = useState("");
+export default function CardModal({ handleClose, open, handleSubmit,values,setValues }) {
 
-	const handleChange = (event) => {
-		setYear(event.target.value);
+
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setValues({ ...values, [name]: value });
+		// to see form values on console.
+		console.log(values);
 	};
+
+	// years
+	const minYear = 1900;
+	const maxYear = new Date().getFullYear();
+	const years = [];
+
+	for (let year = maxYear; year >= minYear; year--) {
+		years.push(year);
+	}
+	// years done
+
 	return (
 		<div>
 			<Modal
@@ -32,41 +46,66 @@ export default function CardModal({ handleClose, open }) {
 				aria-labelledby="modal-modal-title"
 				aria-describedby="modal-modal-description"
 			>
-				<Box component="form" sx={style} noValidate autoComplete="off">
+				<Box
+					onSubmit={(e) => handleSubmit(e, values)} // handleSubmit'e form değerlerini iletmek için
+					component="form"
+					sx={style}
+					noValidate
+					autoComplete="off"
+				>
 					<TextField
 						id="title"
 						label="Kitap Adı"
+						name="title"
 						placeholder="Kitap Adını Giriniz"
 						multiline
+						value={values?.title || ""}
+						onChange={handleChange}
 					/>
 					<TextField
 						id="author"
+						name="author"
 						label="Yazar Adı"
 						placeholder="Yazar Adını Giriniz"
 						multiline
+						value={values?.author || ""}
+						onChange={handleChange}
 					/>
-					<TextField id="isbn" label="ISBN" multiline />
-					<FormControl fullWidth sx={{my:.5}}>
+					<TextField
+						id="ISBN"
+						name="ISBN"
+						label="ISBN"
+						multiline
+						value={values?.ISBN || ""}
+						onChange={handleChange}
+					/>
+					<FormControl fullWidth sx={{ my: 0.5 }}>
 						<InputLabel id="demo-simple-select-label">
 							Yayınlanma Yılı
 						</InputLabel>
 						<Select
 							labelId="demo-simple-select-label"
 							id="publicationYear"
-							value={year}
+							name="publicationYear"
+							value={values?.publicationYear}
 							label="Yayınlanma Yılı"
 							onChange={handleChange}
 						>
-							<MenuItem value={10}>Ten</MenuItem>
-							<MenuItem value={20}>Twenty</MenuItem>
-							<MenuItem value={30}>Thirty</MenuItem>
+							{years.map((year, i) => (
+								<MenuItem value={year} key={i}>
+									{year}
+								</MenuItem>
+							))}
 						</Select>
 					</FormControl>
 					<TextField
 						id="genre"
+						name="genre"
 						label="Tür"
 						helperText="Birden fazla seçenek varsa slash ile ayırabilirsiniz."
 						multiline
+						value={values?.genre || ""}
+						onChange={handleChange}
 					/>
 					<TextField
 						label="Kapak Resmi"
@@ -74,9 +113,9 @@ export default function CardModal({ handleClose, open }) {
 						id="image"
 						type="url"
 						variant="outlined"
-						// value={info.image}
-						// onChange={handleChange}
 						required
+						value={values?.image || ""}
+						onChange={handleChange}
 					/>
 					<Button
 						type="submit"

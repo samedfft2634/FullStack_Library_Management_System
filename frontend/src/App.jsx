@@ -6,15 +6,36 @@ import "./App.css";
 import CardModal from "./BookCard/CardModal";
 
 function App() {
+	const initValues = {
+		title: "",
+		author: "",
+		ISBN: "",
+		genre: "",
+		publicationYear: "",
+		image: "",
+	};
+	const [values, setValues] = useState(initValues);
 	const [open, setOpen] = useState(false);
+	const [books, setBooks] = useState([]);
 	const handleOpen = () => {
 		setOpen(true);
 	};
 	const handleClose = () => {
 		setOpen(false);
+		setValues(initValues);
 	};
-	const [books, setBooks] = useState([]);
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		// if (infos.id) {
+		// 	// put istegi
+		// } else {
+		// 	// post istegi
+		// }
+		handleClose();
+	};
+
 	useEffect(() => {
+		//? GET request
 		axios("http://localhost:8000/books")
 			.then((res) => {
 				// console.log(res);
@@ -49,18 +70,24 @@ function App() {
 					YENI KITAP EKLE
 				</Button>
 			</Box>
-
 			<Stack
 				direction={"row"}
 				useFlexGap
 				spacing={4}
 				sx={{ flexWrap: "wrap", mt: 10 }}
 			>
-				{books.map((book) => (
-					<BookCard {...book} key={book.id} />
-				))}
+				{books &&
+					books?.map((book) => (
+						<BookCard book={book} key={book.id} setValues={setValues} handleOpen={handleOpen} />
+					))}
 			</Stack>
-			<CardModal open={open} handleClose={handleClose} />
+			<CardModal
+				open={open}
+				handleClose={handleClose}
+				handleSubmit={handleSubmit}
+				values={values}
+				setValues={setValues}
+			/>
 		</Container>
 	);
 }

@@ -3,8 +3,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import BookCard from "./BookCard/BookCard";
 import "./App.css";
+import CardModal from "./BookCard/CardModal";
 
 function App() {
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => {
+		setOpen(true);
+	};
+	const handleClose = () => {
+		setOpen(false);
+	};
 	const [books, setBooks] = useState([]);
 	useEffect(() => {
 		axios("http://localhost:8000/books")
@@ -21,7 +29,7 @@ function App() {
 
 	return (
 		<Container
-    maxWidth="xl"
+			maxWidth="xl"
 			sx={{ textAlign: "Center", marginTop: "2rem", padding: "1rem" }}
 		>
 			<Typography variant="h3" sx={{ color: "green" }}>
@@ -31,7 +39,12 @@ function App() {
 				<Button
 					variant="contained"
 					color="success"
-					sx={{ textAlign: "end", marginTop: "1rem" }}
+					sx={{
+						textAlign: "end",
+						marginTop: "1rem",
+						marginRight: "3rem",
+					}}
+					onClick={handleOpen}
 				>
 					YENI KITAP EKLE
 				</Button>
@@ -47,6 +60,7 @@ function App() {
 					<BookCard {...book} key={book.id} />
 				))}
 			</Stack>
+			<CardModal open={open} handleClose={handleClose} />
 		</Container>
 	);
 }

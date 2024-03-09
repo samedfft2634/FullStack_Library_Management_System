@@ -36,45 +36,46 @@ function App() {
 				console.log(err);
 			});
 	};
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (values?.id) {
-			try {
-				const data = await fetch(
-					`http://localhost:8000/books/:${e.target?.id}`,
-					{
-						method: "PUT",
-						body: JSON.stringify(values),
-						headers: {
-							"Content-Type": "application/json",
-						},
-					}
-				);
-				getBooks();
+		try {
+			const url = values?.id
+				? `http://localhost:8000/books/:${e.target?.id}`
+				: "http://localhost:8000/books";
+			const method = values?.id ? "PUT" : "POST";
+			const data = await fetch(url, {
+				method: method,
+				body: JSON.stringify(values),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
 
-				console.log(data);
-			} catch (err) {
-				console.log(
-					err,
-					"Kitap güncellenirken bir hata meydana geldi!"
-				);
-			}
-		} else {
-			try {
-				const data = await fetch("http://localhost:8000/books", {
-					method: "POST",
-					body: JSON.stringify(values),
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
-				getBooks();
-				console.log(data);
-			} catch (err) {
-				console.log(err, "Kitap eklenirken bir hata meydana geldi!");
-			}
+			getBooks();
+			console.log(data);
+		} catch (error) {
+			console.log(
+				err,
+				values?.id
+					? "Kitap güncellenirken bir hata meydana geldi!"
+					: "Kitap eklenirken bir hata meydana geldi!"
+			);
 		}
 		handleClose();
+	};
+	const handleDelete = async(id) => {
+		try {
+			await fetch(`http://localhost:8000/books/${id}`, {
+				method:"DELETE",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+			getBooks();
+		} catch (error) {
+			console.log(error, "Kitap silinirken hata meydana geldi!");
+		}
 	};
 
 	useEffect(() => {
@@ -117,6 +118,7 @@ function App() {
 							key={book.id}
 							setValues={setValues}
 							handleOpen={handleOpen}
+							handleDelete={handleDelete}
 						/>
 					))}
 			</Stack>

@@ -78,7 +78,7 @@ import Button from "@mui/material/Button";
 import CardActions from "@mui/material/CardActions";
 import { CardMedia, Link, Stack } from "@mui/material";
 
-export default function BookCard({ book, handleOpen, setValues }) {
+export default function BookCard({ book, handleOpen, setValues,handleDelete }) {
 	const btnStyle = {
 		color: "green",
 
@@ -90,6 +90,7 @@ export default function BookCard({ book, handleOpen, setValues }) {
 			},
 		},
 	};
+
 	return (
 		<Stack sx={{ minHeight: 350, mx: "auto" }}>
 			<Card
@@ -160,7 +161,7 @@ export default function BookCard({ book, handleOpen, setValues }) {
 								<CreateIcon />
 							</Button>
 
-							<Button size="small" sx={btnStyle}>
+							<Button size="small" sx={btnStyle} onClick={()=>handleDelete(book?.id)}>
 								<DeleteOutlineIcon />
 							</Button>
 						</Box>
